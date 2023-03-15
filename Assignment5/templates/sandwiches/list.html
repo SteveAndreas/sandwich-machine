@@ -16,17 +16,17 @@
 <table>
     <thead>
     <tr>
-        <th>Item</th>
-        <th>Amount</th>
+        <th>sandwich_size</th>
+        <th>price</th>
         <th>Action</th>
     </tr>
     </thead>
 
     <tbody>
-    {% for sandwich in sandwichs %}
+    {% for sandwich in sandwiches %}
     <tr>
-        <td>{{ sandwich.item }}</td>
-        <td>{{ sandwich.amount }}</td>
+        <td>{{ sandwich.sandwich_size }}</td>
+        <td>{{ sandwich.price }}</td>
         <td>
             <a href="{{ url_for('update_sandwich',id=sandwich.id) }}">
                 <button type="button">Update</button>

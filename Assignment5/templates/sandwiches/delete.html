@@ -15,10 +15,10 @@
 <h3><a href="{{ url_for('sandwich') }}">Sandwich List </a></h3>
 
 <form method="POST" action="{{ request.path }}">
-    <label for="item">Item</label><br>
-    <input type="text" name="item" value="{{data.item}}" disabled/><br>
-    <label for="email">Amount</label><br>
-    <input type="number" name="amount" value="{{data.amount}}" disabled/><br>
+    <label for="sandwich_size">sandwich_size</label><br>
+    <input type="text" name="sandwich_size" value="{{data.sandwich_size}}" disabled/><br>
+    <label for="email">price</label><br>
+    <input type="number" name="price" value="{{data.price}}" disabled/><br>
     <input type="submit" value="Delete">
 </form>
 </body>

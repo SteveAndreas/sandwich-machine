@@ -88,12 +88,12 @@ def delete_resource(id):
 class Sandwich(db.Model):
     __tablename__ = 'sandwiches'
     id = db.Column(db.Integer, primary_key=True)
-    item = db.Column(db.String(100), nullable=False)
-    amount = db.Column(db.Integer, nullable=False)
+    sandwich_size = db.Column(db.String(100), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, item, amount):
-        self.item = item
-        self.amount = amount
+    def __init__(self, sandwich_size, price):
+        self.sandwich_size = sandwich_size
+        self.price = price
 
 @app.route("/sandwich")
 def sandwich():
@@ -102,13 +102,13 @@ def sandwich():
 @app.route('/addsandwich', methods=['GET', 'POST'])
 def add_sandwich():
     if request.method == 'POST':
-        if not request.form['item'] or not request.form['amount']:
+        if not request.form['sandwich_size'] or not request.form['price']:
             flash('Please enter all the fields', 'error')
         else:
-            sandwich = Sandwich(request.form['item'], request.form['ammount'])
+            sandwich = Sandwich(request.form['sandwich_size'], request.form['price'])
         
-        db.sesssion.add(sandwich)
-        db.session.commit()
+            db.session.add(sandwich)
+            db.session.commit()
 
         flash('Record was successfully added')
         return redirect(url_for('sandwich'))
@@ -117,12 +117,12 @@ def add_sandwich():
 @app.route('/updatesandwich/<int:id>/', methods=['GET', 'POST'])
 def update_sandwich(id):
     if request.method == 'POST':
-        if not request.form['item'] or not request.form['amount']:
+        if not request.form['sandwich_size'] or not request.form['price']:
             flash('Please enter all the fields', 'errror')
         else:
             sandwich = Sandwich.query.filter_by(id=id).first()
-            sandwich.item = request.form['item']
-            sandwich.amount = request.form['amount']
+            sandwich.sandwich_size = request.form['sandwich_size']
+            sandwich.price = request.form['price']
             db.session.commit()
 
             flash('Record was successfully updated')
