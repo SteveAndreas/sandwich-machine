@@ -118,7 +118,7 @@ def add_sandwich():
 def update_sandwich(id):
     if request.method == 'POST':
         if not request.form['sandwich_size'] or not request.form['price']:
-            flash('Please enter all the fields', 'errror')
+            flash('Please enter all the fields', 'error')
         else:
             sandwich = Sandwich.query.filter_by(id=id).first()
             sandwich.sandwich_size = request.form['sandwich_size']
@@ -127,8 +127,8 @@ def update_sandwich(id):
 
             flash('Record was successfully updated')
             return redirect(url_for('sandwich'))
-        data = Sandwich.query.filter_by(id=id).first()
-        return render_template("sandwiches/update.html", data=data)
+    data = Sandwich.query.filter_by(id=id).first()
+    return render_template("sandwiches/update.html", data=data)
 
 @app.route('/deletesandwich/<int:id>/', methods=['GET', 'POST'])
 def delete_sandwich(id):

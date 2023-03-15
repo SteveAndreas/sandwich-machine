@@ -15,9 +15,9 @@
 <h3><a href="{{ url_for('sandwich') }}">Sandwich List </a></h3>
 
 <form method="POST" action="{{ request.path }}">
-    <label for="sandwich_size">sandwich_size</label><br>
+    <label for="sandwich_size">Sandwich_size</label><br>
     <input type="text" name="sandwich_size" value="{{data.sandwich_size}}"/><br>
-    <label for="email">price</label><br>
+    <label for="email">Price</label><br>
     <input type="number" name="price" value="{{data.price}}"/><br>
     <input type="submit" value="Update">
 </form>
