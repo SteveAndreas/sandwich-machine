@@ -83,6 +83,69 @@ def delete_resource(id):
     data = Resource.query.filter_by(id=id).first()
     return render_template("resources/delete.html", data=data)
 
+###
+
+class Sandwich(db.Model):
+    __tablename__ = 'sandwiches'
+    id = db.Column(db.Integer, primary_key=True)
+    item = db.Column(db.String(100), nullable=False)
+    amount = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, item, amount):
+        self.item = item
+        self.amount = amount
+
+@app.route("/sandwich")
+def sandwich():
+    return render_template("sandwiches/list.html", sandwiches=Sandwich.query.all())
+
+@app.route('/addsandwich', methods=['GET', 'POST'])
+def add_sandwich():
+    if request.method == 'POST':
+        if not request.form['item'] or not request.form['amount']:
+            flash('Please enter all the fields', 'error')
+        else:
+            sandwich = Sandwich(request.form['item'], request.form['ammount'])
+        
+        db.sesssion.add(sandwich)
+        db.session.commit()
+
+        flash('Record was successfully added')
+        return redirect(url_for('sandwich'))
+    return render_template('sandwiches/add.html')
+
+@app.route('/updatesandwich/<int:id>/', methods=['GET', 'POST'])
+def update_sandwich(id):
+    if request.method == 'POST':
+        if not request.form['item'] or not request.form['amount']:
+            flash('Please enter all the fields', 'errror')
+        else:
+            sandwich = Sandwich.query.filter_by(id=id).first()
+            sandwich.item = request.form['item']
+            sandwich.amount = request.form['amount']
+            db.session.commit()
+
+            flash('Record was successfully updated')
+            return redirect(url_for('sandwich'))
+        data = Sandwich.query.filter_by(id=id).first()
+        return render_template("sandwiches/update.html", data=data)
+
+@app.route('/deletesandwich/<int:id>/', methods=['GET', 'POST'])
+def delete_sandwich(id):
+    if request.method == 'POST':
+        sandwich = Sandwich.query.filter_by(id=id).first()
+        db.session.delete(sandwich)
+        db.session.commit()
+
+        flash("Record was successfully deleted")
+        return redirect(url_for('sandwich'))
+    data = Sandwich.query.filter_by(id=id).first()
+    return render_template("sandwiches/delete.html", data=data)
+
+####
 
 if __name__ == '__main__':
     app.run(port=3001, host="localhost", debug=True)
+
+###
+
